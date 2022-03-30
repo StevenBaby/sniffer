@@ -1,6 +1,9 @@
 # coding=utf-8
 import os
 import sys
+
+from scapy import all as cap
+
 from PySide6 import QtWidgets
 from PySide6 import QtGui
 from PySide6.QtWidgets import QMainWindow
@@ -19,6 +22,12 @@ class MainWindow(QMainWindow):
 
         self.setWindowTitle(f"Sniffer v{VERSION}")
         self.setWindowIcon(QtGui.QIcon(os.path.join(DIRNAME, 'images/logo.png')))
+        self.init_interfaces()
+
+    def init_interfaces(self):
+        self.ui.interfaceBox.addItem("Please select interface!")
+        for face in cap.get_working_ifaces():
+            self.ui.interfaceBox.addItem(face.name)
 
 
 def main():
