@@ -16,10 +16,9 @@ from PySide6.QtGui import (QAction, QBrush, QColor, QConicalGradient,
     QIcon, QImage, QKeySequence, QLinearGradient,
     QPainter, QPalette, QPixmap, QRadialGradient,
     QTransform)
-from PySide6.QtWidgets import (QApplication, QComboBox, QHBoxLayout, QHeaderView,
+from PySide6.QtWidgets import (QApplication, QComboBox, QGridLayout, QHeaderView,
     QLabel, QMainWindow, QMenu, QMenuBar,
-    QSizePolicy, QSplitter, QStatusBar, QTableWidget,
-    QTableWidgetItem, QTextBrowser, QTreeWidget, QTreeWidgetItem,
+    QPushButton, QSizePolicy, QTableWidget, QTableWidgetItem,
     QWidget)
 
 class Ui_MainWindow(object):
@@ -38,39 +37,27 @@ class Ui_MainWindow(object):
         self.actionAbout.setFont(font)
         self.centralwidget = QWidget(MainWindow)
         self.centralwidget.setObjectName(u"centralwidget")
-        self.horizontalLayout = QHBoxLayout(self.centralwidget)
-        self.horizontalLayout.setObjectName(u"horizontalLayout")
-        self.splitter_3 = QSplitter(self.centralwidget)
-        self.splitter_3.setObjectName(u"splitter_3")
-        self.splitter_3.setOrientation(Qt.Vertical)
-        self.splitter_2 = QSplitter(self.splitter_3)
-        self.splitter_2.setObjectName(u"splitter_2")
-        self.splitter_2.setOrientation(Qt.Horizontal)
-        self.label = QLabel(self.splitter_2)
-        self.label.setObjectName(u"label")
-        self.splitter_2.addWidget(self.label)
-        self.interfaceBox = QComboBox(self.splitter_2)
-        self.interfaceBox.setObjectName(u"interfaceBox")
-        self.splitter_2.addWidget(self.interfaceBox)
-        self.splitter_3.addWidget(self.splitter_2)
-        self.tableWidget = QTableWidget(self.splitter_3)
-        self.tableWidget.setObjectName(u"tableWidget")
-        self.splitter_3.addWidget(self.tableWidget)
-        self.splitter = QSplitter(self.splitter_3)
-        self.splitter.setObjectName(u"splitter")
-        self.splitter.setOrientation(Qt.Horizontal)
-        self.treeWidget = QTreeWidget(self.splitter)
-        __qtreewidgetitem = QTreeWidgetItem()
-        __qtreewidgetitem.setText(0, u"1");
-        self.treeWidget.setHeaderItem(__qtreewidgetitem)
-        self.treeWidget.setObjectName(u"treeWidget")
-        self.splitter.addWidget(self.treeWidget)
-        self.textBrowser = QTextBrowser(self.splitter)
-        self.textBrowser.setObjectName(u"textBrowser")
-        self.splitter.addWidget(self.textBrowser)
-        self.splitter_3.addWidget(self.splitter)
+        self.gridLayout = QGridLayout(self.centralwidget)
+        self.gridLayout.setObjectName(u"gridLayout")
+        self.startButton = QPushButton(self.centralwidget)
+        self.startButton.setObjectName(u"startButton")
 
-        self.horizontalLayout.addWidget(self.splitter_3)
+        self.gridLayout.addWidget(self.startButton, 0, 5, 1, 1)
+
+        self.label = QLabel(self.centralwidget)
+        self.label.setObjectName(u"label")
+
+        self.gridLayout.addWidget(self.label, 0, 0, 1, 1)
+
+        self.tableWidget = QTableWidget(self.centralwidget)
+        self.tableWidget.setObjectName(u"tableWidget")
+
+        self.gridLayout.addWidget(self.tableWidget, 2, 0, 1, 6)
+
+        self.interfaceBox = QComboBox(self.centralwidget)
+        self.interfaceBox.setObjectName(u"interfaceBox")
+
+        self.gridLayout.addWidget(self.interfaceBox, 0, 1, 1, 4)
 
         MainWindow.setCentralWidget(self.centralwidget)
         self.menubar = QMenuBar(MainWindow)
@@ -81,9 +68,6 @@ class Ui_MainWindow(object):
         self.menuHelp = QMenu(self.menubar)
         self.menuHelp.setObjectName(u"menuHelp")
         MainWindow.setMenuBar(self.menubar)
-        self.statusbar = QStatusBar(MainWindow)
-        self.statusbar.setObjectName(u"statusbar")
-        MainWindow.setStatusBar(self.statusbar)
 
         self.menubar.addAction(self.menuFile.menuAction())
         self.menubar.addAction(self.menuHelp.menuAction())
@@ -100,6 +84,7 @@ class Ui_MainWindow(object):
         MainWindow.setWindowTitle(QCoreApplication.translate("MainWindow", u"Sniffer", None))
         self.actionExit.setText(QCoreApplication.translate("MainWindow", u"Exit", None))
         self.actionAbout.setText(QCoreApplication.translate("MainWindow", u"About", None))
+        self.startButton.setText(QCoreApplication.translate("MainWindow", u"Start", None))
         self.label.setText(QCoreApplication.translate("MainWindow", u"Interface:", None))
         self.menuFile.setTitle(QCoreApplication.translate("MainWindow", u"File", None))
         self.menuHelp.setTitle(QCoreApplication.translate("MainWindow", u"Help", None))

@@ -19,73 +19,28 @@
    <string>Sniffer</string>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <widget class="QComboBox" name="interfaceBox">
-    <property name="geometry">
-     <rect>
-      <x>115</x>
-      <y>11</y>
-      <width>291</width>
-      <height>33</height>
-     </rect>
-    </property>
-   </widget>
-   <widget class="QLabel" name="label">
-    <property name="geometry">
-     <rect>
-      <x>11</x>
-      <y>11</y>
-      <width>98</width>
-      <height>33</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Interface:</string>
-    </property>
-   </widget>
-   <widget class="QTableWidget" name="tableWidget">
-    <property name="geometry">
-     <rect>
-      <x>11</x>
-      <y>50</y>
-      <width>512</width>
-      <height>186</height>
-     </rect>
-    </property>
-   </widget>
-   <widget class="QPushButton" name="pushButton">
-    <property name="geometry">
-     <rect>
-      <x>420</x>
-      <y>10</y>
-      <width>103</width>
-      <height>31</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>PushButton</string>
-    </property>
-   </widget>
-   <widget class="QSplitter" name="splitter">
-    <property name="geometry">
-     <rect>
-      <x>11</x>
-      <y>242</y>
-      <width>512</width>
-      <height>186</height>
-     </rect>
-    </property>
-    <property name="orientation">
-     <enum>Qt::Horizontal</enum>
-    </property>
-    <widget class="QTreeWidget" name="treeWidget">
-     <column>
+   <layout class="QGridLayout" name="gridLayout">
+    <item row="0" column="5">
+     <widget class="QPushButton" name="startButton">
       <property name="text">
-       <string notr="true">1</string>
+       <string>Start</string>
       </property>
-     </column>
-    </widget>
-    <widget class="QTextBrowser" name="textBrowser"/>
-   </widget>
+     </widget>
+    </item>
+    <item row="0" column="0">
+     <widget class="QLabel" name="label">
+      <property name="text">
+       <string>Interface:</string>
+      </property>
+     </widget>
+    </item>
+    <item row="2" column="0" colspan="6">
+     <widget class="QTableWidget" name="tableWidget"/>
+    </item>
+    <item row="0" column="1" colspan="4">
+     <widget class="QComboBox" name="interfaceBox"/>
+    </item>
+   </layout>
   </widget>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">
@@ -111,7 +66,6 @@
    <addaction name="menuFile"/>
    <addaction name="menuHelp"/>
   </widget>
-  <widget class="QStatusBar" name="statusbar"/>
   <action name="actionExit">
    <property name="text">
     <string>Exit</string>
