@@ -25,7 +25,7 @@ from logger import logger
 
 DIRNAME = os.path.dirname(os.path.abspath(__file__))
 VERSION = "0.0.1"
-MAXSIZE = 16
+MAXSIZE = 1024
 LOGO = os.path.join(DIRNAME, 'images/logo.png')
 
 
@@ -57,7 +57,7 @@ class MainWindow(QMainWindow):
             self.ui.interfaceBox.addItem(face.name)
 
         # todo remove after test
-        self.ui.interfaceBox.setCurrentIndex(4)
+        # self.ui.interfaceBox.setCurrentIndex(4)
 
         self.ui.startButton.clicked.connect(self.start_click)
         self.ui.filterEdit.editingFinished.connect(self.validate_filter)
