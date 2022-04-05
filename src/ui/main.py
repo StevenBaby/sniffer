@@ -17,10 +17,10 @@ from PySide6.QtGui import (QAction, QBrush, QColor, QConicalGradient,
     QPainter, QPalette, QPixmap, QRadialGradient,
     QTransform)
 from PySide6.QtWidgets import (QApplication, QComboBox, QGridLayout, QHeaderView,
-    QLabel, QLineEdit, QListWidget, QListWidgetItem,
-    QMainWindow, QMenu, QMenuBar, QPushButton,
-    QSizePolicy, QSplitter, QTableWidget, QTableWidgetItem,
-    QTextEdit, QWidget)
+    QLabel, QLineEdit, QMainWindow, QMenu,
+    QMenuBar, QPushButton, QSizePolicy, QSplitter,
+    QTableWidget, QTableWidgetItem, QTextEdit, QTreeWidget,
+    QTreeWidgetItem, QWidget)
 
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
@@ -51,11 +51,10 @@ class Ui_MainWindow(object):
 
         self.gridLayout.addWidget(self.interfaceBox, 0, 1, 1, 1)
 
-        self.filterEdit = QLineEdit(self.centralwidget)
-        self.filterEdit.setObjectName(u"filterEdit")
-        self.filterEdit.setFont(font)
+        self.startButton = QPushButton(self.centralwidget)
+        self.startButton.setObjectName(u"startButton")
 
-        self.gridLayout.addWidget(self.filterEdit, 1, 1, 1, 1)
+        self.gridLayout.addWidget(self.startButton, 0, 2, 1, 1)
 
         self.label_2 = QLabel(self.centralwidget)
         self.label_2.setObjectName(u"label_2")
@@ -63,10 +62,11 @@ class Ui_MainWindow(object):
 
         self.gridLayout.addWidget(self.label_2, 1, 0, 1, 1)
 
-        self.startButton = QPushButton(self.centralwidget)
-        self.startButton.setObjectName(u"startButton")
+        self.filterEdit = QLineEdit(self.centralwidget)
+        self.filterEdit.setObjectName(u"filterEdit")
+        self.filterEdit.setFont(font)
 
-        self.gridLayout.addWidget(self.startButton, 0, 2, 1, 1)
+        self.gridLayout.addWidget(self.filterEdit, 1, 1, 1, 1)
 
         self.splitter = QSplitter(self.centralwidget)
         self.splitter.setObjectName(u"splitter")
@@ -94,15 +94,19 @@ class Ui_MainWindow(object):
         font1.setPointSize(12)
         self.packetTable.setFont(font1)
         self.splitter.addWidget(self.packetTable)
-        self.listWidget = QListWidget(self.splitter)
-        self.listWidget.setObjectName(u"listWidget")
+        self.treeWidget = QTreeWidget(self.splitter)
+        __qtreewidgetitem = QTreeWidgetItem()
+        __qtreewidgetitem.setText(0, u"1");
+        self.treeWidget.setHeaderItem(__qtreewidgetitem)
+        self.treeWidget.setObjectName(u"treeWidget")
+        self.treeWidget.setAnimated(True)
+        self.splitter.addWidget(self.treeWidget)
+        self.treeWidget.header().setVisible(False)
+        self.contentEdit = QTextEdit(self.splitter)
+        self.contentEdit.setObjectName(u"contentEdit")
         font2 = QFont()
         font2.setFamilies([u"Fira Code"])
         font2.setPointSize(14)
-        self.listWidget.setFont(font2)
-        self.splitter.addWidget(self.listWidget)
-        self.contentEdit = QTextEdit(self.splitter)
-        self.contentEdit.setObjectName(u"contentEdit")
         self.contentEdit.setFont(font2)
         self.contentEdit.setReadOnly(True)
         self.splitter.addWidget(self.contentEdit)
@@ -112,7 +116,7 @@ class Ui_MainWindow(object):
         MainWindow.setCentralWidget(self.centralwidget)
         self.menubar = QMenuBar(MainWindow)
         self.menubar.setObjectName(u"menubar")
-        self.menubar.setGeometry(QRect(0, 0, 955, 31))
+        self.menubar.setGeometry(QRect(0, 0, 955, 37))
         self.menuFile = QMenu(self.menubar)
         self.menuFile.setObjectName(u"menuFile")
         self.menuHelp = QMenu(self.menubar)
@@ -135,8 +139,9 @@ class Ui_MainWindow(object):
         self.actionExit.setText(QCoreApplication.translate("MainWindow", u"Exit", None))
         self.actionAbout.setText(QCoreApplication.translate("MainWindow", u"About", None))
         self.label.setText(QCoreApplication.translate("MainWindow", u"Interface:", None))
-        self.label_2.setText(QCoreApplication.translate("MainWindow", u"Filter:", None))
         self.startButton.setText(QCoreApplication.translate("MainWindow", u"Start", None))
+        self.label_2.setText(QCoreApplication.translate("MainWindow", u"Filter:", None))
+        self.filterEdit.setPlaceholderText(QCoreApplication.translate("MainWindow", u"Input BPF expression to filter packet", None))
         ___qtablewidgetitem = self.packetTable.horizontalHeaderItem(0)
         ___qtablewidgetitem.setText(QCoreApplication.translate("MainWindow", u"No.", None));
         ___qtablewidgetitem1 = self.packetTable.horizontalHeaderItem(1)

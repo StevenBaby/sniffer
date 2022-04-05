@@ -16,6 +16,7 @@ from PySide6 import QtGui
 from PySide6 import QtCore
 from PySide6.QtWidgets import QTableWidgetItem as QTItem
 from PySide6.QtWidgets import QListWidgetItem as QLItem
+from PySide6.QtWidgets import QTreeWidgetItem as QRItem
 
 from PySide6.QtWidgets import QMainWindow
 from ui import main as main_ui
@@ -59,10 +60,12 @@ class MainWindow(QMainWindow):
         self.ui.interfaceBox.setCurrentIndex(4)
 
         self.ui.startButton.clicked.connect(self.start_click)
-        self.ui.filterEdit.textEdited.connect(self.validate_filter)
+        self.ui.filterEdit.editingFinished.connect(self.validate_filter)
 
         self.ui.packetTable.horizontalHeader().setStretchLastSection(True)
         self.ui.packetTable.cellPressed.connect(self.update_content)
+
+        self.ui.treeWidget.itemPressed.connect(self.update_layer_content)
 
         self.signal.recv.connect(self.update_packet)
 
@@ -85,7 +88,8 @@ class MainWindow(QMainWindow):
         iface = cap.get_working_ifaces()[idx]
         return iface
 
-    def validate_filter(self, exp):
+    def validate_filter(self):
+        exp = self.ui.filterEdit.text().strip()
         if not exp:
             self.ui.filterEdit.setStyleSheet('')
             self.ui.startButton.setEnabled(True)
@@ -111,6 +115,12 @@ class MainWindow(QMainWindow):
             yield layer
             counter += 1
 
+    def update_layer_content(self, item, column):
+        if not hasattr(item, 'layer'):
+            return
+        layer = item.layer
+        self.ui.contentEdit.setText(hexdump(layer, dump=True))
+
     def update_content(self, x, y):
         logger.debug("%s, %s clicked", x, y)
         item = self.ui.packetTable.item(x, 6)
@@ -121,9 +131,18 @@ class MainWindow(QMainWindow):
         packet = item.packet
         self.ui.contentEdit.setText(hexdump(packet, dump=True))
 
-        self.ui.listWidget.clear()
+        self.ui.treeWidget.clear()
         for layer in self.get_packet_layers(packet):
-            self.ui.listWidget.addItem(QLItem(layer.summary()))
+            item = QRItem(self.ui.treeWidget)
+            item.layer = layer
+            item.setText(0, layer.name)
+            # self.ui.treeWidget.addTopLevelItem(item)
+
+            for name, value in layer.fields.items():
+                child = QRItem(item)
+                child.setText(0, f"{name}: {value}")
+
+        # self.ui.treeWidget.expandAll()
 
     def update_packet(self):
         packet = self.queue.get(False)
@@ -218,7 +237,7 @@ class MainWindow(QMainWindow):
         self.ui.filterEdit.setEnabled(False)
         self.ui.packetTable.clearContents()
         self.ui.packetTable.setRowCount(0)
-        self.ui.listWidget.clear()
+        self.ui.treeWidget.clear()
         self.ui.contentEdit.clear()
 
 
