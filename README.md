@@ -2,6 +2,8 @@
 
 [本项目 github 地址](https://github.com/StevenBaby/sniffer)
 
+[本项目视频介绍](https://www.bilibili.com/video/BV16i4y1S7YA/)
+
 ## 安装软件
 
 需要安装 `requirements.txt` 中的依赖：
